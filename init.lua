@@ -41,8 +41,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -72,6 +72,8 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  'junegunn/vim-easy-align',
+  'jpalardy/vim-slime',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -202,15 +204,22 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'maxmx03/solarized.nvim',
     priority = 1000,
     lazy = false,
     config = function()
-      require('onedark').setup {
-        -- Set a style preset. 'dark' is default.
-        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+      local success, solarized = pcall(require, 'solarized')
+
+      vim.o.background = 'dark'
+
+      solarized:setup {
+        config = {
+          theme = 'neovim',
+          transparent = false
+        }
       }
-      require('onedark').load()
+
+      vim.cmd.colorscheme 'solarized'
     end,
   },
 
@@ -290,13 +299,37 @@ require('lazy').setup({
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+-- vim.opt.nu = true       -- Line numbers
+vim.opt.ai = true -- Autoindent
+vim.opt.updatetime = 50
+vim.mouse = ''
+-- vim.cmd [[set formatoptions-=o]]
 
--- Make line numbers default
-vim.wo.number = true
+-- Whitespace
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+-- Search
+vim.opt.ignorecase = true
+vim.opt.incsearch = true
+vim.opt.hlsearch = false
+vim.opt.smartcase = true
+
+-- Display
+vim.opt.wrap = false
+vim.opt.termguicolors = false
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = 'yes'
+vim.opt.foldlevel = 99
+vim.opt.wildmode = 'longest:full'
+
+-- swap
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv 'HOME' .. '/tmp/vim.undo'
+vim.opt.undofile = true
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -305,13 +338,6 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
 
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
@@ -341,6 +367,39 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+vim.keymap.set('n', '<leader>,', ':w!<CR>')
+vim.keymap.set('n', 'qq', ':qa!<CR>')
+vim.keymap.set('n', "<leader>'", vim.cmd.tabn)
+vim.keymap.set('n', '<leader>;', vim.cmd.tabp)
+vim.keymap.set('n', '<C-e>', ':tabe ')
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<leader>r', ':%s/\\s*$//<CR>')
+
+-- Moving code!!
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('x', '<leader>o', '"_dP')
+
+-- System copy/paste
+vim.keymap.set('n', '<leader>y', '"+y')
+vim.keymap.set('v', '<leader>y', '"+y')
+vim.keymap.set('n', '<leader>y', '"+Y')
+vim.keymap.set('n', '<leader>Y', ':.w! ~/.vimpaste<CR>')
+vim.keymap.set('v', '<leader>Y', ':w! ~/.vimpaste<CR>')
+vim.keymap.set('n', '<leader>P', ':r ~/.vimpaste<CR>')
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown' },
+  callback = function(_)
+    vim.keymap.set('n', '<leader>f', '{!}fmt -p 150<CR>')
+    vim.keymap.set('v', '<leader>f', ':!fmt -p 150<CR>')
+  end,
+})
+
+vim.keymap.set('n', 'ga', ':EasyAlign')
+vim.keymap.set('v', 'ga', ':EasyAlign')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -679,6 +738,76 @@ cmp.setup {
     { name = 'path' },
   },
 }
+
+vim.g.slime_target = "tmux"
+
+vim.keymap.set("n", "<Space>", "<Plug>SlimeLineSend<CR>")
+vim.keymap.set("v", "<Space>", "<Plug>SlimeRegionSend<CR>")
+vim.keymap.set("n", "<leader>v", ":SlimeConfig<CR><CR>")
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function()
+        vim.g.slime_python_ipython = 1
+    end
+})
+
+vim.keymap.set("n", "ga", ":EasyAlign<CR>")
+vim.keymap.set("v", "ga", ":EasyAlign<CR>")
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+vim.keymap.set('n', '<leader>ps', function()
+        builtin.grep_string({ search = vim.fn.input("Grep > ") })
+end)
+
+-- Define a function to highlight the current search term
+function highlight_search_term(label)
+  local search_term = vim.fn.getreg('/')
+  if search_term ~= '' then
+    -- local matches =
+    vim.fn.matchadd(label, search_term)
+    -- for match_id in matches do
+    --   vim.api.nvim_buf_add_highlight(0, -1, label, 0, match_id[1] - 1, match_id[2])
+    -- end
+  end
+end
+
+vim.keymap.set("n", "<leader>m1", function() highlight_search_term("Matchadd_1") end)
+vim.keymap.set("n", "<leader>m2", function() highlight_search_term("Matchadd_2") end)
+vim.keymap.set("n", "<leader>m3", function() highlight_search_term("Matchadd_3") end)
+vim.keymap.set("n", "<leader>m4", function() highlight_search_term("Matchadd_4") end)
+vim.keymap.set("n", "<leader>m5", function() highlight_search_term("Matchadd_5") end)
+vim.keymap.set("n", "<leader>mc", function() vim.fn.clearmatches() end)
+
+local colors = {
+  base03  =  '#002b36',
+  base02  =  '#073642',
+  base01  =  '#586e75',
+  base00  =  '#657b83',
+  base0   =  '#839496',
+  base1   =  '#93a1a1',
+  base2   =  '#eee8d5',
+  base3   =  '#fdf6e3',
+  yellow  =  '#b58900',
+  orange  =  '#cb4b16',
+  red     =  '#dc322f',
+  magenta =  '#d33682',
+  violet  =  '#6c71c4',
+  blue    =  '#268bd2',
+  cyan    =  '#2aa198',
+  green   =  '#859900',
+}
+
+vim.api.nvim_set_hl(0, "Matchadd_1", { bg = colors.blue, fg = 0 })
+vim.api.nvim_set_hl(0, "Matchadd_2", { bg = colors.violet, fg = 0 })
+vim.api.nvim_set_hl(0, "Matchadd_3", { bg = colors.cyan, fg = 0 })
+vim.api.nvim_set_hl(0, "Matchadd_4", { bg = colors.red, fg = 0 })
+vim.api.nvim_set_hl(0, "Matchadd_5", { bg = colors.orange, fg = 0 })
+vim.api.nvim_set_hl(0, "Matchadd_6", { bg = colors.yellow, fg = 0 })
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
