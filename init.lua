@@ -318,6 +318,7 @@ vim.opt.hlsearch = false
 vim.opt.smartcase = true
 
 -- Display
+vim.opt.nu = true
 vim.opt.wrap = false
 vim.opt.termguicolors = false
 vim.opt.scrolloff = 8
@@ -397,9 +398,6 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('v', '<leader>f', ':!fmt -p 150<CR>')
   end,
 })
-
-vim.keymap.set('n', 'ga', ':EasyAlign')
-vim.keymap.set('v', 'ga', ':EasyAlign')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -807,7 +805,8 @@ vim.api.nvim_set_hl(0, "Matchadd_4", { bg = colors.red, fg = 0 })
 vim.api.nvim_set_hl(0, "Matchadd_5", { bg = colors.orange, fg = 0 })
 vim.api.nvim_set_hl(0, "Matchadd_6", { bg = colors.yellow, fg = 0 })
 
-
+-- Automatically format
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
