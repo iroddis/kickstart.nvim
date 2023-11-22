@@ -125,8 +125,15 @@ require('lazy').setup({
     },
   },
 
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
+  },
+
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -744,10 +751,10 @@ vim.keymap.set("v", "<Space>", "<Plug>SlimeRegionSend<CR>")
 vim.keymap.set("n", "<leader>v", ":SlimeConfig<CR><CR>")
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
-    callback = function()
-        vim.g.slime_python_ipython = 1
-    end
+  pattern = "python",
+  callback = function()
+    vim.g.slime_python_ipython = 1
+  end
 })
 
 vim.keymap.set("n", "ga", ":EasyAlign<CR>")
@@ -757,7 +764,7 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', function()
-        builtin.grep_string({ search = vim.fn.input("Grep > ") })
+  builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end)
 
 -- Define a function to highlight the current search term
@@ -780,22 +787,22 @@ vim.keymap.set("n", "<leader>m5", function() highlight_search_term("Matchadd_5")
 vim.keymap.set("n", "<leader>mc", function() vim.fn.clearmatches() end)
 
 local colors = {
-  base03  =  '#002b36',
-  base02  =  '#073642',
-  base01  =  '#586e75',
-  base00  =  '#657b83',
-  base0   =  '#839496',
-  base1   =  '#93a1a1',
-  base2   =  '#eee8d5',
-  base3   =  '#fdf6e3',
-  yellow  =  '#b58900',
-  orange  =  '#cb4b16',
-  red     =  '#dc322f',
-  magenta =  '#d33682',
-  violet  =  '#6c71c4',
-  blue    =  '#268bd2',
-  cyan    =  '#2aa198',
-  green   =  '#859900',
+  base03  = '#002b36',
+  base02  = '#073642',
+  base01  = '#586e75',
+  base00  = '#657b83',
+  base0   = '#839496',
+  base1   = '#93a1a1',
+  base2   = '#eee8d5',
+  base3   = '#fdf6e3',
+  yellow  = '#b58900',
+  orange  = '#cb4b16',
+  red     = '#dc322f',
+  magenta = '#d33682',
+  violet  = '#6c71c4',
+  blue    = '#268bd2',
+  cyan    = '#2aa198',
+  green   = '#859900',
 }
 
 vim.api.nvim_set_hl(0, "Matchadd_1", { bg = colors.blue, fg = 0 })
