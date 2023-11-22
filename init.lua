@@ -587,7 +587,8 @@ vim.defer_fn(function()
       "clang-format",
       "prettier",
       "black"
-    }
+    },
+    auto_update = true,
   }
 end, 0)
 
