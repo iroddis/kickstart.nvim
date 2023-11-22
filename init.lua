@@ -98,6 +98,12 @@ require('lazy').setup({
   },
 
   {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = {
+      'neovim/nvim-lspconfig'
+    },
+  },
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -571,6 +577,21 @@ vim.defer_fn(function()
   }
 end, 0)
 
+
+vim.defer_fn(function()
+  require('mason-tool-installer').setup {
+    ensure_installed = {
+      "clangd",
+      "jedi_language_server",
+      "ruff_lsp",
+      "clang-format",
+      "prettier",
+      "luaformatter",
+      "black"
+    }
+  }
+end, 0)
+
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -656,7 +677,6 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -666,6 +686,15 @@ local servers = {
     },
   },
 }
+vim.api.nvim_set_var("lsp_formatters",
+  {
+    "luaformatter",
+    "prettier",
+    "cmakelang",
+    "beautysh",
+    "clang-format",
+    "black",
+  })
 
 -- Setup neovim lua configuration
 require('neodev').setup()
