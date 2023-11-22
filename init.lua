@@ -586,7 +586,6 @@ vim.defer_fn(function()
       "ruff_lsp",
       "clang-format",
       "prettier",
-      "luaformatter",
       "black"
     }
   }
