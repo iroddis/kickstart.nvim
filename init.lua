@@ -336,6 +336,8 @@ vim.opt.termguicolors = false
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = 'yes'
 vim.opt.foldlevel = 99
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.wildmode = 'longest:full'
 
 -- swap
@@ -749,7 +751,7 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      -- elseif luasnip.expand_or_locally_jumpable() then
+        -- elseif luasnip.expand_or_locally_jumpable() then
         -- luasnip.expand_or_jump()
       else
         fallback()
@@ -758,7 +760,7 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      -- elseif luasnip.locally_jumpable(-1) then
+        -- elseif luasnip.locally_jumpable(-1) then
         -- luasnip.jump(-1)
       else
         fallback()
