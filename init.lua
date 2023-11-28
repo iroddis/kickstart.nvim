@@ -587,7 +587,8 @@ vim.defer_fn(function()
       "ruff_lsp",
       "clang-format",
       "prettier",
-      "black"
+      "black",
+      "mypy"
     },
     auto_update = true,
   }
