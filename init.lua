@@ -74,6 +74,7 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'junegunn/vim-easy-align',
   'jpalardy/vim-slime',
+  'github/copilot.vim',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -221,17 +222,7 @@ require('lazy').setup({
     priority = 1000,
     lazy = false,
     config = function()
-      local success, solarized = pcall(require, 'solarized')
-
       vim.o.background = 'dark'
-
-      solarized:setup {
-        config = {
-          theme = 'neovim',
-          transparent = false
-        }
-      }
-
       vim.cmd.colorscheme 'solarized'
     end,
   },
@@ -511,7 +502,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'elixir' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -800,7 +791,7 @@ vim.keymap.set('n', '<leader>ps', function()
 end)
 
 -- Define a function to highlight the current search term
-function highlight_search_term(label)
+local highlight_search_term = function(label)
   local search_term = vim.fn.getreg('/')
   if search_term ~= '' then
     -- local matches =
