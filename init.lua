@@ -307,7 +307,6 @@ require('lazy').setup({
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
 vim.mouse = ''
-vim.cmd [[set formatoptions-=o]]
 
 -- Whitespace
 vim.opt.tabstop = 2
@@ -837,6 +836,15 @@ vim.api.nvim_set_hl(0, "Matchadd_6", { bg = colors.yellow, fg = 0 })
 
 -- Automatically format
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+-- Because nvim filetypes are stupid ... need to disable formatoptions for all file types
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt.formatoptions:remove("r")
+    vim.opt.formatoptions:remove("o")
+  end
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
