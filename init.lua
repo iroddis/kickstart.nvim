@@ -75,6 +75,7 @@ require('lazy').setup({
   'junegunn/vim-easy-align',
   'jpalardy/vim-slime',
   'github/copilot.vim',
+  'mhartington/formatter.nvim',
 
   -- Detect tabstop and shiftwidth automatically
   -- 'tpope/vim-sleuth',
@@ -91,7 +92,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -428,6 +429,22 @@ require('telescope').setup {
   },
 }
 
+require('formatter').setup {
+  logging = true,
+  log_level = vim.log.levels.WARN,
+  filetype = {
+    javascript = {
+      function()
+        return {
+          exe = 'prettier',
+          args = { '--stdin-filepath', vim.api.nvim_buf_get_name(0) },
+          stdin = true,
+        }
+      end,
+    },
+  }
+}
+
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -678,11 +695,13 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  eslint = {},
 }
 vim.api.nvim_set_var("lsp_formatters",
   {
     "luaformatter",
     "prettier",
+    "prettierd",
     "cmakelang",
     "beautysh",
     "clang-format",
@@ -845,6 +864,15 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt.formatoptions:remove("o")
   end
 })
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+augroup("__formatter__", { clear = true })
+autocmd("BufWritePost", {
+  group = "__formatter__",
+  command = ":FormatWrite",
+})
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
