@@ -307,7 +307,7 @@ require('lazy').setup({
 -- vim.opt.nu = true       -- Line numbers
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
-vim.mouse = ''
+vim.opt.mouse = ''
 
 -- Whitespace
 vim.opt.tabstop = 2
