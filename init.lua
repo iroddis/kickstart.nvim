@@ -788,7 +788,7 @@ cmp.setup {
 vim.g.slime_target = "tmux"
 
 vim.keymap.set("n", "<Space>", "<Plug>SlimeLineSend<CR>")
-vim.keymap.set("v", "<Space>", "<Plug>SlimeRegionSend<CR>")
+vim.keymap.set("v", "<Space>", "<Plug>SlimeRegionSend<CR>'>")
 vim.keymap.set("n", "<leader>v", ":SlimeConfig<CR><CR>")
 
 vim.api.nvim_create_autocmd("FileType", {
