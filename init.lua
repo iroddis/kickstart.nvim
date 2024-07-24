@@ -74,7 +74,7 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'junegunn/vim-easy-align',
   'jpalardy/vim-slime',
-  'github/copilot.vim',
+  -- 'github/copilot.vim',
   'mhartington/formatter.nvim',
 
   -- Detect tabstop and shiftwidth automatically
@@ -218,15 +218,22 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'maxmx03/solarized.nvim',
+    -- 'maxmx03/solarized.nvim',
+    'dracula/vim',
     priority = 1000,
     lazy = false,
     config = function()
       vim.o.background = 'dark'
-      vim.cmd.colorscheme 'solarized'
+      vim.cmd.colorscheme 'dracula'
     end,
   },
 
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      enable = true,
+    }
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
