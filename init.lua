@@ -229,9 +229,14 @@ require('lazy').setup({
   },
 
   {
-    'nvim-treesitter/nvim-treesitter-context',
+    'SmiteshP/nvim-navic',
     opts = {
-      enable = true,
+      lsp = {
+        auto_attach = true
+      }
+    },
+    dependencies = {
+      { 'nvim-lspconfig' }
     }
   },
   {
@@ -244,6 +249,9 @@ require('lazy').setup({
         theme = 'auto',
         component_separators = '|',
         section_separators = '',
+      },
+      sections = {
+        lualine_c = { 'navic' }
       },
     },
   },
