@@ -302,7 +302,9 @@ require('lazy').setup({
   {
     "chentoast/marks.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      builtin_marks = { "<", ">", "{", "}" },
+    },
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
