@@ -348,6 +348,7 @@ require('lazy').setup({
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
 vim.opt.mouse = ''
+vim.opt.ttimeoutlen = 150 -- Leader timeout (default 50)
 
 -- Whitespace
 vim.opt.tabstop = 2
