@@ -478,7 +478,7 @@ require('formatter').setup {
       function()
         return {
           exe = 'prettier',
-          args = { '--stdin-filepath', vim.api.nvim_buf_get_name(0) },
+          args = { '--stdin-filepath', vim.api.nvim_buf_get_name(0), '--print-width', 120 },
           stdin = true,
         }
       end,
