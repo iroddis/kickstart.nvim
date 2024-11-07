@@ -641,11 +641,12 @@ vim.defer_fn(function()
     ensure_installed = {
       "clangd",
       "jedi_language_server",
-      "ruff_lsp",
+      "ruff",
       "clang-format",
       "prettier",
       "black",
-      "mypy"
+      "mypy",
+      "lexical"
     },
     auto_update = true,
   }
