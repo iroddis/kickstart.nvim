@@ -324,6 +324,15 @@ require('lazy').setup({
     },
   },
 
+  -- AI coding
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = true
+  }
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -903,6 +912,17 @@ augroup("__formatter__", { clear = true })
 autocmd("BufWritePost", {
   group = "__formatter__",
   command = ":FormatWrite",
+})
+
+require("codecompanion").setup({
+  strategies = {
+    chat = {
+      adapter = "anthropic",
+    },
+    inline = {
+      adapter = "anthropic",
+    },
+  },
 })
 
 
