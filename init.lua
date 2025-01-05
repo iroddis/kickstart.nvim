@@ -233,17 +233,18 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    -- 'maxmx03/solarized.nvim',
-    'dracula/vim',
-    priority = 1000,
-    lazy = false,
-    config = function()
-      vim.o.background = 'dark'
-      vim.cmd.colorscheme 'dracula'
-    end,
-  },
+  --{
+  --  -- Theme inspired by Atom
+  --  -- 'maxmx03/solarized.nvim',
+  --  'dracula/vim',
+  --  priority = 1000,
+  --  lazy = false,
+  --  config = function()
+  --    vim.o.background = 'dark'
+  --    vim.cmd.colorscheme 'dracula'
+  --  end,
+  --},
+  { 'tanvirtin/monokai.nvim' },
 
   {
     'SmiteshP/nvim-navic',
@@ -454,6 +455,8 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('v', '<leader>f', ':!fmt -p 150<CR>')
   end,
 })
+
+require('monokai').setup { palette = require('monokai').pro }
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
