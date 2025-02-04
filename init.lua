@@ -358,7 +358,8 @@ require('lazy').setup({
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
 vim.opt.mouse = ''
-vim.opt.ttimeoutlen = 150 -- Leader timeout (default 50)
+vim.opt.ttimeoutlen = 1000
+-- vim.opt.ttimeoutlen = 0 -- Leader timeout (default 50)
 
 -- Whitespace
 vim.opt.tabstop = 2
@@ -920,14 +921,30 @@ autocmd("BufWritePost", {
 require("codecompanion").setup({
   strategies = {
     chat = {
-      adapter = "anthropic",
+      adapter = "ollama",
     },
     inline = {
-      adapter = "anthropic",
+      adapter = "ollama",
     },
   },
+  adapters = {
+    ollama = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        env = {
+          url = "http://192.168.203.8:11434"
+          -- api_key = "OLLAMA_API_KEY",
+        },
+        headers = {
+          ["Content-Type"] = "application/json"
+          -- ["Authorization"] = "Bearer ${api_key}",
+        },
+        parameters = {
+          sync = true,
+        },
+      })
+    end,
+  },
 })
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
