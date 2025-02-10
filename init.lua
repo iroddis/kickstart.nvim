@@ -437,9 +437,9 @@ vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<leader>r', ':%s/\\s*$//<CR>')
 
 -- Moving code!!
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-vim.keymap.set('x', '<leader>o', '"_dP')
+-- vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+-- vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+-- vim.keymap.set('x', '<leader>o', '"_dP')
 
 -- System copy/paste
 vim.keymap.set('n', '<leader>y', '"+y')
