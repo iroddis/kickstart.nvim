@@ -457,7 +457,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-require('monokai').setup { palette = require('monokai').pro }
+require('monokai').setup { palette = require('monokai').ristretto }
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
