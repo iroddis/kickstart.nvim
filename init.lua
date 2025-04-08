@@ -359,6 +359,7 @@ vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
 vim.opt.mouse = ''
 vim.opt.ttimeoutlen = 1000
+vim.opt.ttimeout = true
 -- vim.opt.ttimeoutlen = 0 -- Leader timeout (default 50)
 
 -- Whitespace
