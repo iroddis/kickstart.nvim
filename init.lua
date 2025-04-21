@@ -74,7 +74,6 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'junegunn/vim-easy-align',
   'jpalardy/vim-slime',
-  'github/copilot.vim',
   'mhartington/formatter.nvim',
 
   -- Detect tabstop and shiftwidth automatically
