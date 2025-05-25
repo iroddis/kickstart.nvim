@@ -324,15 +324,6 @@ require('lazy').setup({
     },
   },
 
-  -- AI coding
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = true
-  }
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -916,34 +907,6 @@ augroup("__formatter__", { clear = true })
 autocmd("BufWritePost", {
   group = "__formatter__",
   command = ":FormatWrite",
-})
-
-require("codecompanion").setup({
-  strategies = {
-    chat = {
-      adapter = "ollama",
-    },
-    inline = {
-      adapter = "ollama",
-    },
-  },
-  adapters = {
-    ollama = function()
-      return require("codecompanion.adapters").extend("ollama", {
-        env = {
-          url = "http://192.168.203.8:11434"
-          -- api_key = "OLLAMA_API_KEY",
-        },
-        headers = {
-          ["Content-Type"] = "application/json"
-          -- ["Authorization"] = "Bearer ${api_key}",
-        },
-        parameters = {
-          sync = true,
-        },
-      })
-    end,
-  },
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
