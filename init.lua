@@ -785,6 +785,16 @@ cmp.setup {
   completion = {
     completeopt = 'menu,menuone,noinsert',
   },
+  -- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disabling-completion-in-certain-contexts-such-as-comments
+  -- Disable completion within comments, because it is stupid
+  enabled = function()
+    local disabled = false
+    disabled = disabled or (vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt')
+    disabled = disabled or (vim.fn.reg_recording() ~= '')
+    disabled = disabled or (vim.fn.reg_executing() ~= '')
+    disabled = disabled or require('cmp.config.context').in_treesitter_capture('comment')
+    return not disabled
+  end,
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
