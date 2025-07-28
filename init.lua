@@ -731,6 +731,11 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  pylsp = {
+    plugsin = {
+      pyflakes = { enabled = false }
+    }
+  },
   eslint = {},
 }
 vim.api.nvim_set_var("lsp_formatters",
