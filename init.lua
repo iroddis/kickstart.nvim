@@ -924,5 +924,11 @@ autocmd("BufWritePost", {
   command = ":FormatWrite",
 })
 
+-- Disable change-detection if in diff mode. Allows for diffs involving redirects
+-- eg nvim -d <(cmd 1) <(cmd 2)
+if (vim.diff) then
+  vim.opt.autoread = false
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
