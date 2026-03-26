@@ -642,17 +642,18 @@ end, 0)
 
 vim.defer_fn(function()
   require('mason-tool-installer').setup {
-    ensure_installed = {
-      -- "clangd",
-      -- "jedi_language_server",
-      -- "ruff",
-      "clang-format",
-      "prettier",
-      "black",
-      "mypy",
-      "lexical"
-    },
+    -- ensure_installed = {
+    --   -- "clangd",
+    --   -- "jedi_language_server",
+    --   -- "ruff",
+    --   "clang-format",
+    --   "prettier",
+    --   "black",
+    --   "mypy",
+    --   "lexical"
+    -- },
     auto_update = true,
+    automatic_installation = false,
   }
 end, 0)
 
