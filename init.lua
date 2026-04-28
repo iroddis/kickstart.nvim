@@ -110,15 +110,6 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
   },
-  {
-    -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    build = ':TSUpdate',
-  },
-
   -- Marks management
   {
     'chentoast/marks.nvim',
@@ -130,7 +121,7 @@ require('lazy').setup({
 }, {})
 
 vim.lsp.enable 'ruff_lsp'
-vim.lsp.enable 'go'
+vim.lsp.enable 'gopls'
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'elixirls'
 
@@ -155,6 +146,7 @@ vim.opt.hlsearch = false
 vim.opt.smartcase = true
 
 -- Display
+vim.opt.autocomplete = true
 vim.opt.nu = true
 vim.opt.wrap = false
 vim.opt.termguicolors = false
@@ -162,7 +154,6 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = 'yes'
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.wildmode = 'longest:full'
 
 -- swap
@@ -239,17 +230,6 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 require('monokai').setup { palette = require('monokai').ristretto }
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
