@@ -125,6 +125,8 @@ vim.lsp.enable 'gopls'
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'elixirls'
 
+vim.treesitter.start()
+
 -- [[ Setting options ]]
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
@@ -459,9 +461,6 @@ vim.api.nvim_set_hl(0, 'Matchadd_4', { bg = colors.red, fg = 0 })
 vim.api.nvim_set_hl(0, 'Matchadd_5', { bg = colors.orange, fg = 0 })
 vim.api.nvim_set_hl(0, 'Matchadd_6', { bg = colors.yellow, fg = 0 })
 
--- Automatically format
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-
 -- Because nvim filetypes are stupid ... need to disable formatoptions for all file types
 vim.api.nvim_create_autocmd('FileType', {
   pattern = '*',
@@ -471,25 +470,8 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   pattern = "*",
---   callback = function(args)
---     require("conform").format({ bufnr = args.buf })
---   end,
--- })
--- local augroup = vim.api.nvim_create_augroup
--- local autocmd = vim.api.nvim_create_autocmd
--- augroup("__formatter__", { clear = true })
--- autocmd("BufWritePost", {
---   group = "__formatter__",
---   command = ":FormatWrite",
--- })
-
 -- Disable change-detection if in diff mode. Allows for diffs involving redirects
 -- eg nvim -d <(cmd 1) <(cmd 2)
 if vim.diff then
   vim.opt.autoread = false
 end
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
