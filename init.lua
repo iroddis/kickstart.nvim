@@ -125,8 +125,6 @@ vim.lsp.enable 'gopls'
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'elixirls'
 
-vim.treesitter.start()
-
 -- [[ Setting options ]]
 vim.opt.ai = true -- Autoindent
 vim.opt.updatetime = 50
@@ -391,6 +389,13 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'python',
   callback = function()
     vim.g.slime_python_ipython = 1
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.treesitter.start()
   end,
 })
 
